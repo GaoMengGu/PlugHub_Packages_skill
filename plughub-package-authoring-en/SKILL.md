@@ -41,7 +41,7 @@ Use this skill to produce a complete PlugHub-loadable package, not just a Revit 
    - Ensure icons are real package files, not `builtin:` references or absolute paths.
 
 5. Validate before completion.
-   - Run `python <skill>/scripts/validate_plughub_package.py <package-root>` for manifest and payload checks.
+   - Run `dotnet run --project <skill-dir>/tools/PlugHub.PackageValidator/PlugHub.PackageValidator.csproj -- <package-root>` for manifest and payload checks.
    - Run the repository validator when present, usually `.\tests\Validate-Package.ps1`.
    - Run `.\build.ps1 -UseRevitApiNuGet` for CI-style compile checks, or `.\build.ps1 -RevitApiDir "<Revit 2020 install dir>"` for installed Revit API references.
    - For behavior, smoke-test in Windows + Revit 2020 with a safe test model or family file.

@@ -150,10 +150,10 @@ namespace PlugHub.ExampleTool
    - Build to `dist/<AssemblyName>.dll`.
 
 6. Validate.
-   - Run `python <skill>/scripts/validate_plughub_package.py <package-root>`.
+   - Run `dotnet run --project <skill-dir>/tools/PlugHub.PackageValidator/PlugHub.PackageValidator.csproj -- <package-root>`.
    - Run `.\tests\Validate-Package.ps1` when the package repo has it.
    - Run `.\build.ps1 -UseRevitApiNuGet` when Revit is not installed.
-   - Run `.\build.ps1 -RevitApiDir "D:\Program Files\Autodesk\Revit 2020"` when local Revit API DLLs are available.
+   - Run `.\build.ps1 -RevitApiDir "<Revit 2020 API DLL directory>"` when local Revit API DLLs are available.
    - Revit behavior still requires Windows + Revit 2020 runtime validation.
 
 ## Repository Checklist

@@ -1,7 +1,6 @@
-__pycache__/
-*.pyc
-.pytest_cache/
-.source/
-.deps/
-tmp/
-temp/
+**/bin/
+**/obj/
+.vs/
+.idea/
+*.user
+*.suo

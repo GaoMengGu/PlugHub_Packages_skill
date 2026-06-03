@@ -1,5 +1,16 @@
 {
   "repository": "GaoMengGu/PlugHub_Packages_skill",
+  "readme": {
+    "zh-CN": "README.zh-CN.md",
+    "en-US": "README.en-US.md"
+  },
+  "agentCompatibility": [
+    "Codex",
+    "Hermes",
+    "OpenClaw",
+    "Trae",
+    "CodeBuddy"
+  ],
   "skills": [
     {
       "name": "plughub-package-authoring",

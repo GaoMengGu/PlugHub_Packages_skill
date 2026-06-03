@@ -1,0 +1,36 @@
+name: Sync Main To Gitee
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Gitee SSH
+        env:
+          GITEE_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
+        run: |
+          if [ -z "$GITEE_PRIVATE_KEY" ]; then
+            echo "::error::GITEE_PRIVATE_KEY secret is required for Gitee sync."
+            exit 1
+          fi
+          mkdir -p ~/.ssh
+          printf '%s\n' "$GITEE_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
+
+      - name: Push main to Gitee
+        run: |
+          git remote add gitee git@gitee.com:GaoMengGu/PlugHub_Packages_skill.git
+          git push --force gitee HEAD:main
