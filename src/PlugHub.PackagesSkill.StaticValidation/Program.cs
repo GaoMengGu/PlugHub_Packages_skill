@@ -65,9 +65,10 @@ internal static class RepositoryValidator
         var rootReadme = ReadRequiredText(root, "README.md", errors);
         if (rootReadme.Length > 0)
         {
-            RequireContains(rootReadme, "README.zh-CN.md", "README.md must link to the Chinese README.", errors);
             RequireContains(rootReadme, "README.en-US.md", "README.md must link to the English README.", errors);
             RequireContains(rootReadme, "skills.json", "README.md must mention skills.json discovery.", errors);
+            RejectContains(rootReadme, "dotnet run", "README.md must not document validation commands.", errors);
+            RejectContains(rootReadme, "PlugHub.PackageValidator", "README.md must not document validator project usage.", errors);
         }
 
         var chinese = ReadRequiredText(root, "README.zh-CN.md", errors);
@@ -325,6 +326,14 @@ internal static class RepositoryValidator
     private static void RequireContains(string text, string expected, string error, List<string> errors)
     {
         if (!text.Contains(expected, StringComparison.Ordinal))
+        {
+            errors.Add(error);
+        }
+    }
+
+    private static void RejectContains(string text, string forbidden, string error, List<string> errors)
+    {
+        if (text.Contains(forbidden, StringComparison.OrdinalIgnoreCase))
         {
             errors.Add(error);
         }
