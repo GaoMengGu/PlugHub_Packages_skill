@@ -11,6 +11,26 @@
     "Trae",
     "CodeBuddy"
   ],
+  "agentEntries": {
+    "core": {
+      "zh-CN": {
+        "identity": "agent-entries/core/IDENTITY.md",
+        "soul": "agent-entries/core/SOUL.md",
+        "agents": "agent-entries/core/AGENTS.md"
+      },
+      "en-US": {
+        "identity": "agent-entries/core/IDENTITY.en-US.md",
+        "soul": "agent-entries/core/SOUL.en-US.md",
+        "agents": "agent-entries/core/AGENTS.en-US.md"
+      }
+    },
+    "platforms": {
+      "Hermes": "agent-entries/hermes/HERMES.md",
+      "OpenClaw": "agent-entries/openclaw/OPENCLAW.md",
+      "Trae": "agent-entries/trae/TRAE.md",
+      "CodeBuddy": "agent-entries/codebuddy/CODEBUDDY.md"
+    }
+  },
   "skills": [
     {
       "name": "plughub-package-authoring",

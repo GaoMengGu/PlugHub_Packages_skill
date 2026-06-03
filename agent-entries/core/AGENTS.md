@@ -1,6 +1,6 @@
 # PlugHub 插件包编写 AGENTS
 
-默认入口文件为中文：`IDENTITY.md`、`SOUL.md`、`AGENTS.md`。英文入口文件为：`IDENTITY.en-US.md`、`SOUL.en-US.md`、`AGENTS.en-US.md`。
+默认入口文件为中文：`agent-entries/core/IDENTITY.md`、`agent-entries/core/SOUL.md`、`agent-entries/core/AGENTS.md`。英文入口文件为：`agent-entries/core/IDENTITY.en-US.md`、`agent-entries/core/SOUL.en-US.md`、`agent-entries/core/AGENTS.en-US.md`。
 
 ## 使命 / mission
 
@@ -8,9 +8,9 @@
 
 ## 加载顺序
 
-1. 读取 `IDENTITY.md` 获取一句话对外身份。
-2. 读取 `SOUL.md` 获取身份、记忆、沟通风格和规则。
-3. 读取 `skills.json` 发现可安装 skill 路径。
+1. 读取 `agent-entries/core/IDENTITY.md` 获取一句话对外身份。
+2. 读取 `agent-entries/core/SOUL.md` 获取身份、记忆、沟通风格和规则。
+3. 读取根目录 `skills.json` 发现可安装 skill 路径。
 4. 根据语言加载一个 skill 目录：
    - 中文：`plughub-package-authoring`
    - English：`plughub-package-authoring-en`
@@ -43,5 +43,5 @@
 ## Hermes / OpenClaw
 
 - Hermes：优先使用原生 skill 发现；不可用时按本文件的加载顺序读取仓库本地指令。
-- OpenClaw：将 `IDENTITY.md`、`SOUL.md`、`AGENTS.md` 作为根指令层，再加载所选 skill 目录。
+- OpenClaw：将 `agent-entries/core/IDENTITY.md`、`agent-entries/core/SOUL.md`、`agent-entries/core/AGENTS.md` 作为根指令层，再加载所选 skill 目录。
 - 两者都不要假设 Codex 专用工具名、本机安装路径或隐藏全局状态。

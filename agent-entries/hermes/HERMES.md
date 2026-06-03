@@ -1,18 +1,18 @@
 # Hermes Entry Point
 
-Default Chinese root instruction files:
+Default Chinese entry files:
 
-1. `IDENTITY.md`
-2. `SOUL.md`
-3. `AGENTS.md`
+1. `agent-entries/core/IDENTITY.md`
+2. `agent-entries/core/SOUL.md`
+3. `agent-entries/core/AGENTS.md`
 
-English root instruction files:
+English entry files:
 
-1. `IDENTITY.en-US.md`
-2. `SOUL.en-US.md`
-3. `AGENTS.en-US.md`
+1. `agent-entries/core/IDENTITY.en-US.md`
+2. `agent-entries/core/SOUL.en-US.md`
+3. `agent-entries/core/AGENTS.en-US.md`
 
-Use `skills.json` to discover installable paths, then load one skill directory:
+Use root `skills.json` to discover installable paths, then load one skill directory:
 
 - `plughub-package-authoring` for Chinese workflows.
 - `plughub-package-authoring-en` for English workflows.

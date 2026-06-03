@@ -9,16 +9,17 @@ internal static class RepositoryValidator
     private static readonly string[] SkillDirectories = ["plughub-package-authoring", "plughub-package-authoring-en"];
     private static readonly string[] AgentEntryFiles =
     [
-        "SOUL.md",
-        "SOUL.en-US.md",
-        "AGENTS.md",
-        "AGENTS.en-US.md",
-        "IDENTITY.md",
-        "IDENTITY.en-US.md",
-        "HERMES.md",
-        "OPENCLAW.md",
-        "TRAE.md",
-        "CODEBUDDY.md"
+        "agent-entries/README.md",
+        "agent-entries/core/SOUL.md",
+        "agent-entries/core/SOUL.en-US.md",
+        "agent-entries/core/AGENTS.md",
+        "agent-entries/core/AGENTS.en-US.md",
+        "agent-entries/core/IDENTITY.md",
+        "agent-entries/core/IDENTITY.en-US.md",
+        "agent-entries/hermes/HERMES.md",
+        "agent-entries/openclaw/OPENCLAW.md",
+        "agent-entries/trae/TRAE.md",
+        "agent-entries/codebuddy/CODEBUDDY.md"
     ];
     private static readonly string[] SensitiveFragments =
     [
@@ -64,7 +65,6 @@ internal static class RepositoryValidator
             "README.md",
             "README.zh-CN.md",
             "README.en-US.md",
-            "AGENTS.md",
             "skills.json",
             ".github/workflows/sync-gitee.yml"
         }.Concat(AgentEntryFiles))
@@ -80,6 +80,7 @@ internal static class RepositoryValidator
         {
             RequireContains(rootReadme, "README.en-US.md", "README.md must link to the English README.", errors);
             RequireContains(rootReadme, "skills.json", "README.md must mention skills.json discovery.", errors);
+            RequireContains(rootReadme, "agent-entries", "README.md must mention the agent entry directory.", errors);
             RejectContains(rootReadme, "dotnet run", "README.md must not document validation commands.", errors);
             RejectContains(rootReadme, "PlugHub.PackageValidator", "README.md must not document validator project usage.", errors);
         }
@@ -103,67 +104,102 @@ internal static class RepositoryValidator
 
     private static void ValidateAgentEntries(string root, List<string> errors)
     {
-        var soul = ReadRequiredText(root, "SOUL.md", errors);
+        foreach (var oldRootEntry in new[] { "SOUL.md", "SOUL.en-US.md", "AGENTS.md", "AGENTS.en-US.md", "IDENTITY.md", "IDENTITY.en-US.md", "HERMES.md", "OPENCLAW.md", "TRAE.md", "CODEBUDDY.md" })
+        {
+            if (File.Exists(Path.Combine(root, oldRootEntry)))
+            {
+                errors.Add($"Move root agent entry into agent-entries/: {oldRootEntry}");
+            }
+        }
+
+        var index = ReadRequiredText(root, "agent-entries/README.md", errors);
+        if (index.Length > 0)
+        {
+            RequireContains(index, "core/", "agent-entries/README.md must list the core directory.", errors);
+            RequireContains(index, "hermes/", "agent-entries/README.md must list the Hermes directory.", errors);
+            RequireContains(index, "openclaw/", "agent-entries/README.md must list the OpenClaw directory.", errors);
+            RequireContains(index, "trae/", "agent-entries/README.md must list the Trae directory.", errors);
+            RequireContains(index, "codebuddy/", "agent-entries/README.md must list the CodeBuddy directory.", errors);
+        }
+
+        var soul = ReadRequiredText(root, "agent-entries/core/SOUL.md", errors);
         if (soul.Length > 0)
         {
-            RequireContains(soul, "身份", "SOUL.md must include the 身份 keyword.", errors);
-            RequireContains(soul, "记忆", "SOUL.md must include the 记忆 keyword.", errors);
-            RequireContains(soul, "identity", "SOUL.md must include the identity keyword.", errors);
-            RequireContains(soul, "communication", "SOUL.md must include the communication keyword.", errors);
-            RequireContains(soul, "style", "SOUL.md must include the style keyword.", errors);
-            RequireContains(soul, "规则", "SOUL.md must include the 规则 keyword.", errors);
-            RequireContains(soul, "rules", "SOUL.md must include the rules keyword.", errors);
+            RequireContains(soul, "身份", "agent-entries/core/SOUL.md must include the 身份 keyword.", errors);
+            RequireContains(soul, "记忆", "agent-entries/core/SOUL.md must include the 记忆 keyword.", errors);
+            RequireContains(soul, "identity", "agent-entries/core/SOUL.md must include the identity keyword.", errors);
+            RequireContains(soul, "communication", "agent-entries/core/SOUL.md must include the communication keyword.", errors);
+            RequireContains(soul, "style", "agent-entries/core/SOUL.md must include the style keyword.", errors);
+            RequireContains(soul, "规则", "agent-entries/core/SOUL.md must include the 规则 keyword.", errors);
+            RequireContains(soul, "rules", "agent-entries/core/SOUL.md must include the rules keyword.", errors);
         }
 
-        var soulEnglish = ReadRequiredText(root, "SOUL.en-US.md", errors);
+        var soulEnglish = ReadRequiredText(root, "agent-entries/core/SOUL.en-US.md", errors);
         if (soulEnglish.Length > 0)
         {
-            RequireContains(soulEnglish, "Identity", "SOUL.en-US.md must include the Identity keyword.", errors);
-            RequireContains(soulEnglish, "Memory", "SOUL.en-US.md must include the Memory keyword.", errors);
-            RequireContains(soulEnglish, "Communication", "SOUL.en-US.md must include the Communication keyword.", errors);
-            RequireContains(soulEnglish, "Style", "SOUL.en-US.md must include the Style keyword.", errors);
-            RequireContains(soulEnglish, "Rules", "SOUL.en-US.md must include the Rules keyword.", errors);
+            RequireContains(soulEnglish, "Identity", "agent-entries/core/SOUL.en-US.md must include the Identity keyword.", errors);
+            RequireContains(soulEnglish, "Memory", "agent-entries/core/SOUL.en-US.md must include the Memory keyword.", errors);
+            RequireContains(soulEnglish, "Communication", "agent-entries/core/SOUL.en-US.md must include the Communication keyword.", errors);
+            RequireContains(soulEnglish, "Style", "agent-entries/core/SOUL.en-US.md must include the Style keyword.", errors);
+            RequireContains(soulEnglish, "Rules", "agent-entries/core/SOUL.en-US.md must include the Rules keyword.", errors);
         }
 
-        var identity = ReadRequiredText(root, "IDENTITY.md", errors);
+        var identity = ReadRequiredText(root, "agent-entries/core/IDENTITY.md", errors);
         if (identity.Length > 0)
         {
-            RequireSingleSentence(identity, "IDENTITY.md", errors);
-            RequireContains(identity, "PlugHub", "IDENTITY.md must identify PlugHub.", errors);
-            RequireContains(identity, "Revit 2020", "IDENTITY.md must preserve the Revit 2020 boundary.", errors);
+            RequireSingleSentence(identity, "agent-entries/core/IDENTITY.md", errors);
+            RequireContains(identity, "PlugHub", "agent-entries/core/IDENTITY.md must identify PlugHub.", errors);
+            RequireContains(identity, "Revit 2020", "agent-entries/core/IDENTITY.md must preserve the Revit 2020 boundary.", errors);
         }
 
-        var identityEnglish = ReadRequiredText(root, "IDENTITY.en-US.md", errors);
+        var identityEnglish = ReadRequiredText(root, "agent-entries/core/IDENTITY.en-US.md", errors);
         if (identityEnglish.Length > 0)
         {
-            RequireSingleSentence(identityEnglish, "IDENTITY.en-US.md", errors);
-            RequireContains(identityEnglish, "PlugHub", "IDENTITY.en-US.md must identify PlugHub.", errors);
-            RequireContains(identityEnglish, "Revit 2020", "IDENTITY.en-US.md must preserve the Revit 2020 boundary.", errors);
+            RequireSingleSentence(identityEnglish, "agent-entries/core/IDENTITY.en-US.md", errors);
+            RequireContains(identityEnglish, "PlugHub", "agent-entries/core/IDENTITY.en-US.md must identify PlugHub.", errors);
+            RequireContains(identityEnglish, "Revit 2020", "agent-entries/core/IDENTITY.en-US.md must preserve the Revit 2020 boundary.", errors);
         }
 
-        var agents = ReadRequiredText(root, "AGENTS.md", errors);
+        var agents = ReadRequiredText(root, "agent-entries/core/AGENTS.md", errors);
         if (agents.Length > 0)
         {
-            RequireContains(agents, "使命", "AGENTS.md must include the 使命 keyword.", errors);
-            RequireContains(agents, "mission", "AGENTS.md must include the mission keyword.", errors);
-            RequireContains(agents, "交付", "AGENTS.md must include the 交付 keyword.", errors);
-            RequireContains(agents, "workflow", "AGENTS.md must include the workflow keyword.", errors);
-            RequireContains(agents, "IDENTITY.md", "AGENTS.md must load IDENTITY.md.", errors);
-            RequireContains(agents, "SOUL.md", "AGENTS.md must load SOUL.md.", errors);
-            RequireContains(agents, "skills.json", "AGENTS.md must use skills.json discovery.", errors);
-            RequireContains(agents, "Hermes", "AGENTS.md must mention Hermes.", errors);
-            RequireContains(agents, "OpenClaw", "AGENTS.md must mention OpenClaw.", errors);
+            RequireContains(agents, "使命", "agent-entries/core/AGENTS.md must include the 使命 keyword.", errors);
+            RequireContains(agents, "mission", "agent-entries/core/AGENTS.md must include the mission keyword.", errors);
+            RequireContains(agents, "交付", "agent-entries/core/AGENTS.md must include the 交付 keyword.", errors);
+            RequireContains(agents, "workflow", "agent-entries/core/AGENTS.md must include the workflow keyword.", errors);
+            RequireContains(agents, "agent-entries/core/IDENTITY.md", "agent-entries/core/AGENTS.md must load IDENTITY.md.", errors);
+            RequireContains(agents, "agent-entries/core/SOUL.md", "agent-entries/core/AGENTS.md must load SOUL.md.", errors);
+            RequireContains(agents, "skills.json", "agent-entries/core/AGENTS.md must use skills.json discovery.", errors);
+            RequireContains(agents, "Hermes", "agent-entries/core/AGENTS.md must mention Hermes.", errors);
+            RequireContains(agents, "OpenClaw", "agent-entries/core/AGENTS.md must mention OpenClaw.", errors);
         }
 
-        var agentsEnglish = ReadRequiredText(root, "AGENTS.en-US.md", errors);
+        var agentsEnglish = ReadRequiredText(root, "agent-entries/core/AGENTS.en-US.md", errors);
         if (agentsEnglish.Length > 0)
         {
-            RequireContains(agentsEnglish, "Mission", "AGENTS.en-US.md must include the Mission keyword.", errors);
-            RequireContains(agentsEnglish, "Workflow", "AGENTS.en-US.md must include the Workflow keyword.", errors);
-            RequireContains(agentsEnglish, "Delivery", "AGENTS.en-US.md must include the Delivery keyword.", errors);
-            RequireContains(agentsEnglish, "IDENTITY.en-US.md", "AGENTS.en-US.md must load IDENTITY.en-US.md.", errors);
-            RequireContains(agentsEnglish, "SOUL.en-US.md", "AGENTS.en-US.md must load SOUL.en-US.md.", errors);
-            RequireContains(agentsEnglish, "skills.json", "AGENTS.en-US.md must use skills.json discovery.", errors);
+            RequireContains(agentsEnglish, "Mission", "agent-entries/core/AGENTS.en-US.md must include the Mission keyword.", errors);
+            RequireContains(agentsEnglish, "Workflow", "agent-entries/core/AGENTS.en-US.md must include the Workflow keyword.", errors);
+            RequireContains(agentsEnglish, "Delivery", "agent-entries/core/AGENTS.en-US.md must include the Delivery keyword.", errors);
+            RequireContains(agentsEnglish, "agent-entries/core/IDENTITY.en-US.md", "agent-entries/core/AGENTS.en-US.md must load IDENTITY.en-US.md.", errors);
+            RequireContains(agentsEnglish, "agent-entries/core/SOUL.en-US.md", "agent-entries/core/AGENTS.en-US.md must load SOUL.en-US.md.", errors);
+            RequireContains(agentsEnglish, "skills.json", "agent-entries/core/AGENTS.en-US.md must use skills.json discovery.", errors);
+        }
+
+        foreach (var platformEntry in new Dictionary<string, string>
+        {
+            ["Hermes"] = "agent-entries/hermes/HERMES.md",
+            ["OpenClaw"] = "agent-entries/openclaw/OPENCLAW.md",
+            ["Trae"] = "agent-entries/trae/TRAE.md",
+            ["CodeBuddy"] = "agent-entries/codebuddy/CODEBUDDY.md"
+        })
+        {
+            var text = ReadRequiredText(root, platformEntry.Value, errors);
+            if (text.Length > 0)
+            {
+                RequireContains(text, "skills.json", $"{platformEntry.Value} must use skills.json discovery.", errors);
+                RequireContains(text, "plughub-package-authoring", $"{platformEntry.Value} must list the Chinese skill path.", errors);
+                RequireContains(text, "plughub-package-authoring-en", $"{platformEntry.Value} must list the English skill path.", errors);
+            }
         }
     }
 
@@ -291,6 +327,39 @@ internal static class RepositoryValidator
                 errors.Add($"skills.json must list {skillDirectory} with matching name and path.");
             }
         }
+
+        ValidateAgentEntriesJson(rootElement, errors);
+    }
+
+    private static void ValidateAgentEntriesJson(JsonElement rootElement, List<string> errors)
+    {
+        if (!rootElement.TryGetProperty("agentEntries", out var agentEntries) || agentEntries.ValueKind != JsonValueKind.Object)
+        {
+            errors.Add("skills.json must contain an agentEntries object.");
+            return;
+        }
+
+        var expectedPaths = new Dictionary<string, string>
+        {
+            ["core.zh-CN.identity"] = "agent-entries/core/IDENTITY.md",
+            ["core.zh-CN.soul"] = "agent-entries/core/SOUL.md",
+            ["core.zh-CN.agents"] = "agent-entries/core/AGENTS.md",
+            ["core.en-US.identity"] = "agent-entries/core/IDENTITY.en-US.md",
+            ["core.en-US.soul"] = "agent-entries/core/SOUL.en-US.md",
+            ["core.en-US.agents"] = "agent-entries/core/AGENTS.en-US.md",
+            ["platforms.Hermes"] = "agent-entries/hermes/HERMES.md",
+            ["platforms.OpenClaw"] = "agent-entries/openclaw/OPENCLAW.md",
+            ["platforms.Trae"] = "agent-entries/trae/TRAE.md",
+            ["platforms.CodeBuddy"] = "agent-entries/codebuddy/CODEBUDDY.md"
+        };
+
+        foreach (var expected in expectedPaths)
+        {
+            if (!TryGetNestedString(agentEntries, expected.Key, out var actual) || actual != expected.Value)
+            {
+                errors.Add($"skills.json agentEntries.{expected.Key} must be {expected.Value}.");
+            }
+        }
     }
 
     private static void ValidateWorkflow(string root, List<string> errors)
@@ -380,6 +449,28 @@ internal static class RepositoryValidator
         {
             errors.Add(error);
         }
+    }
+
+    private static bool TryGetNestedString(JsonElement root, string dottedPath, out string? value)
+    {
+        var current = root;
+        foreach (var segment in dottedPath.Split('.'))
+        {
+            if (current.ValueKind != JsonValueKind.Object || !current.TryGetProperty(segment, out current))
+            {
+                value = null;
+                return false;
+            }
+        }
+
+        if (current.ValueKind == JsonValueKind.String)
+        {
+            value = current.GetString();
+            return true;
+        }
+
+        value = null;
+        return false;
     }
 
     private static void RequireFile(string root, string relativePath, List<string> errors)

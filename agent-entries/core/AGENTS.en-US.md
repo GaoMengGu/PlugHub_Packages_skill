@@ -1,6 +1,6 @@
 # PlugHub Package Authoring AGENTS
 
-The default entry files are Chinese: `IDENTITY.md`, `SOUL.md`, and `AGENTS.md`. English entry files are: `IDENTITY.en-US.md`, `SOUL.en-US.md`, and `AGENTS.en-US.md`.
+The default entry files are Chinese: `agent-entries/core/IDENTITY.md`, `agent-entries/core/SOUL.md`, and `agent-entries/core/AGENTS.md`. English entry files are: `agent-entries/core/IDENTITY.en-US.md`, `agent-entries/core/SOUL.en-US.md`, and `agent-entries/core/AGENTS.en-US.md`.
 
 ## Mission
 
@@ -8,9 +8,9 @@ Deliver Revit 2020 feature requests as complete PlugHub external packages that c
 
 ## Load Order
 
-1. Read `IDENTITY.en-US.md` for the one-sentence public identity.
-2. Read `SOUL.en-US.md` for identity, memory, communication style, and rules.
-3. Read `skills.json` to discover installable skill paths.
+1. Read `agent-entries/core/IDENTITY.en-US.md` for the one-sentence public identity.
+2. Read `agent-entries/core/SOUL.en-US.md` for identity, memory, communication style, and rules.
+3. Read root `skills.json` to discover installable skill paths.
 4. Load one skill directory by language:
    - Chinese: `plughub-package-authoring`
    - English: `plughub-package-authoring-en`
@@ -43,5 +43,5 @@ The final delivery must report:
 ## Hermes / OpenClaw
 
 - Hermes: prefer native skill discovery; if unavailable, read repository-local instructions in this file's load order.
-- OpenClaw: use `IDENTITY.en-US.md`, `SOUL.en-US.md`, and `AGENTS.en-US.md` as the root instruction layer, then load the selected skill directory.
+- OpenClaw: use `agent-entries/core/IDENTITY.en-US.md`, `agent-entries/core/SOUL.en-US.md`, and `agent-entries/core/AGENTS.en-US.md` as the root instruction layer, then load the selected skill directory.
 - In both environments, do not assume Codex-specific tool names, local install paths, or hidden global state.

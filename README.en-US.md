@@ -11,6 +11,16 @@ This repository ships skill resources for authoring PlugHub external plugin pack
 
 When an agent receives this repository URL, it should read [skills.json](skills.json) first and then use its native skill installer, repository import, or subpath loading mechanism for the listed paths. Do not assume a machine-specific local install directory.
 
+## Agent Entries
+
+Cross-agent entry files are collected under [agent-entries](agent-entries/README.md):
+
+- `agent-entries/core/`: shared identity, SOUL, and AGENTS entries, Chinese by default with English variants.
+- `agent-entries/hermes/`: Hermes entry point.
+- `agent-entries/openclaw/`: OpenClaw entry point.
+- `agent-entries/trae/`: Trae entry point.
+- `agent-entries/codebuddy/`: CodeBuddy entry point.
+
 ## Scope
 
 The skill is for creating, reviewing, or repairing PlugHub packages. It covers:
