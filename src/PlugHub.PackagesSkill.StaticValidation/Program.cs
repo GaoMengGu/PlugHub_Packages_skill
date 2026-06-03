@@ -7,7 +7,7 @@ return RepositoryValidator.Run(args);
 internal static class RepositoryValidator
 {
     private static readonly string[] SkillDirectories = ["plughub-package-authoring", "plughub-package-authoring-en"];
-    private static readonly string[] AgentEntryFiles = ["AGENTS.md", "HERMES.md", "OPENCLAW.md", "TRAE.md", "CODEBUDDY.md"];
+    private static readonly string[] AgentEntryFiles = ["SOUL.md", "AGENTS.md", "IDENTITY.md", "HERMES.md", "OPENCLAW.md", "TRAE.md", "CODEBUDDY.md"];
     private static readonly string[] SensitiveFragments =
     [
         string.Concat("C:", "\\", "Users"),
@@ -35,6 +35,7 @@ internal static class RepositoryValidator
 
         ValidateRequiredFiles(root, errors);
         ValidateReadmes(root, errors);
+        ValidateAgentEntries(root, errors);
         ValidateSkills(root, errors);
         ValidateSkillsJson(root, errors);
         ValidateWorkflow(root, errors);
@@ -85,6 +86,37 @@ internal static class RepositoryValidator
             RequireContains(english, "dotnet run --project", "English README must document C# validation.", errors);
             RequireContains(english, "plughub-package-authoring", "English README must list the Chinese skill path.", errors);
             RequireContains(english, "plughub-package-authoring-en", "English README must list the English skill path.", errors);
+        }
+    }
+
+    private static void ValidateAgentEntries(string root, List<string> errors)
+    {
+        var soul = ReadRequiredText(root, "SOUL.md", errors);
+        if (soul.Length > 0)
+        {
+            RequireContains(soul, "Hermes", "SOUL.md must mention Hermes compatibility.", errors);
+            RequireContains(soul, "OpenClaw", "SOUL.md must mention OpenClaw compatibility.", errors);
+            RequireContains(soul, "Revit 2020", "SOUL.md must preserve the Revit 2020 boundary.", errors);
+            RequireContains(soul, "IExternalCommand", "SOUL.md must preserve the Revit command boundary.", errors);
+        }
+
+        var identity = ReadRequiredText(root, "IDENTITY.md", errors);
+        if (identity.Length > 0)
+        {
+            RequireContains(identity, "GaoMengGu/PlugHub", "IDENTITY.md must identify the PlugHub repository.", errors);
+            RequireContains(identity, "GaoMengGu/PlugHub_Packages", "IDENTITY.md must identify the package repository pattern.", errors);
+            RequireContains(identity, "plughub-package-authoring", "IDENTITY.md must identify the Chinese skill path.", errors);
+            RequireContains(identity, "plughub-package-authoring-en", "IDENTITY.md must identify the English skill path.", errors);
+        }
+
+        var agents = ReadRequiredText(root, "AGENTS.md", errors);
+        if (agents.Length > 0)
+        {
+            RequireContains(agents, "IDENTITY.md", "AGENTS.md must load IDENTITY.md.", errors);
+            RequireContains(agents, "SOUL.md", "AGENTS.md must load SOUL.md.", errors);
+            RequireContains(agents, "skills.json", "AGENTS.md must use skills.json discovery.", errors);
+            RequireContains(agents, "Hermes", "AGENTS.md must mention Hermes.", errors);
+            RequireContains(agents, "OpenClaw", "AGENTS.md must mention OpenClaw.", errors);
         }
     }
 

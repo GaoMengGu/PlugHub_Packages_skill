@@ -1,5 +1,11 @@
 # Hermes Entry Point
 
+Read root instruction files first:
+
+1. `IDENTITY.md`
+2. `SOUL.md`
+3. `AGENTS.md`
+
 Use `skills.json` to discover installable paths, then load one skill directory:
 
 - `plughub-package-authoring` for Chinese workflows.
