@@ -1,36 +1,47 @@
-# Agent Instructions
+# PlugHub 插件包编写 AGENTS
 
-This repository is a cross-agent skill package for authoring PlugHub external plugin packages. It is intended to work in Codex, Hermes, OpenClaw, Trae, CodeBuddy, and similar coding agents.
+默认入口文件为中文：`IDENTITY.md`、`SOUL.md`、`AGENTS.md`。英文入口文件为：`IDENTITY.en-US.md`、`SOUL.en-US.md`、`AGENTS.en-US.md`。
 
-## Load Order
+## 使命 / mission
 
-1. Read `IDENTITY.md` to establish the outward role.
-2. Read `SOUL.md` to establish durable behavior and non-negotiable boundaries.
-3. Read `skills.json` to discover installable skill paths.
-4. Load one skill directory:
-   - Chinese: `plughub-package-authoring`
-   - English: `plughub-package-authoring-en`
-5. Read the selected `SKILL.md`, then load reference files only when needed:
-   - `references/plughub-package-contract.md` before writing or changing manifests.
-   - `references/authoring-playbook.md` before creating a new package.
-   - `references/agent-compatibility.md` when adapting to a non-Codex agent.
+把用户的 Revit 2020 功能需求交付为完整的 PlugHub 外部插件包，使其能通过仓库源发现、安装到 PlugHub、显示到 PlugHub Ribbon，并在 Revit 2020 中执行。
 
-## Hermes And OpenClaw
+## 加载顺序
 
-- Hermes: if native skill discovery is available, import the selected skill path from `skills.json`; otherwise treat the selected directory as repository-local instructions.
-- OpenClaw: use `SOUL.md`, `IDENTITY.md`, and this `AGENTS.md` as the root instruction layer, then load the selected skill directory for task-specific details.
-- In both environments, do not assume Codex-specific tool names, local install paths, or hidden machine state.
+1. 读取 `IDENTITY.md` 获取一句话对外身份。
+2. 读取 `SOUL.md` 获取身份、记忆、沟通风格和规则。
+3. 读取 `skills.json` 发现可安装 skill 路径。
+4. 根据语言加载一个 skill 目录：
+   - 中文：`plughub-package-authoring`
+   - English：`plughub-package-authoring-en`
+5. 读取所选目录的 `SKILL.md`；仅在任务需要时加载引用文件：
+   - 写清单前读取 `references/plughub-package-contract.md`。
+   - 新建包前读取 `references/authoring-playbook.md`。
+   - 在 Hermes、OpenClaw、Trae、CodeBuddy 等非 Codex 环境中读取 `references/agent-compatibility.md`。
 
-## PlugHub Package Contract
+## 工作流 / workflow
 
-The target output is a complete PlugHub package:
+1. 定位插件包根目录、现有清单和附近示例。
+2. 将需求映射为模块 id、功能 id、Ribbon 分组、按钮大小、图标路径、命令程序集和命令类型。
+3. 维护 `package.json` 或 `*.package.json`，确保 `schemaVersion`、`version`、`revitVersions`、`frameworkVersionRange` 和 `modules` 完整。
+4. 实现或修复 `net48` 命令程序集，命令类型必须实现 `Autodesk.Revit.UI.IExternalCommand`。
+5. 保持载荷为包内相对路径：`dist/*.dll` 和 `icons/*.png`。
+6. 更新构建入口、解决方案或包仓库集成文件。
+7. 运行 C# 包验证器、仓库验证器和编译检查；能运行 Revit 2020 时做 runtime smoke test。
 
-- Manifest: `package.json` or `*.package.json` with `schemaVersion`, `version`, `revitVersions`, `frameworkVersionRange`, and non-empty `modules`.
-- Runtime: Revit `2020`, `.NET Framework 4.8` / `net48`, and `PlugHub.Contracts`.
-- Payloads: package-relative `dist/*.dll` command assemblies and `icons/*.png` feature icons.
-- Commands: every user-triggered feature declares a full `commandType` implementing `Autodesk.Revit.UI.IExternalCommand`.
-- Metadata: module and feature ids remain unique, stable, and aligned with Ribbon grouping.
+## 交付 / delivery
 
-## Completion Rule
+交付结果必须说明：
 
-Do not stop after writing C# code. Report manifest changes, payload paths, build integration, C# validation evidence, compile evidence, and Revit 2020 runtime smoke-test status. If Revit 2020 is unavailable, say that runtime verification is pending.
+- 修改或新增的清单文件。
+- `assembly`、`commandAssembly`、`iconPath` 对应的包内相对载荷。
+- 新增或修复的命令类型。
+- 构建集成位置。
+- C# 静态验证和编译结果。
+- Revit 2020 runtime smoke test 结果；无法执行时，明确标记待执行。
+
+## Hermes / OpenClaw
+
+- Hermes：优先使用原生 skill 发现；不可用时按本文件的加载顺序读取仓库本地指令。
+- OpenClaw：将 `IDENTITY.md`、`SOUL.md`、`AGENTS.md` 作为根指令层，再加载所选 skill 目录。
+- 两者都不要假设 Codex 专用工具名、本机安装路径或隐藏全局状态。

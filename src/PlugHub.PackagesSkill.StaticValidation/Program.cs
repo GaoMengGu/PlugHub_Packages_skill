@@ -7,7 +7,19 @@ return RepositoryValidator.Run(args);
 internal static class RepositoryValidator
 {
     private static readonly string[] SkillDirectories = ["plughub-package-authoring", "plughub-package-authoring-en"];
-    private static readonly string[] AgentEntryFiles = ["SOUL.md", "AGENTS.md", "IDENTITY.md", "HERMES.md", "OPENCLAW.md", "TRAE.md", "CODEBUDDY.md"];
+    private static readonly string[] AgentEntryFiles =
+    [
+        "SOUL.md",
+        "SOUL.en-US.md",
+        "AGENTS.md",
+        "AGENTS.en-US.md",
+        "IDENTITY.md",
+        "IDENTITY.en-US.md",
+        "HERMES.md",
+        "OPENCLAW.md",
+        "TRAE.md",
+        "CODEBUDDY.md"
+    ];
     private static readonly string[] SensitiveFragments =
     [
         string.Concat("C:", "\\", "Users"),
@@ -94,29 +106,64 @@ internal static class RepositoryValidator
         var soul = ReadRequiredText(root, "SOUL.md", errors);
         if (soul.Length > 0)
         {
-            RequireContains(soul, "Hermes", "SOUL.md must mention Hermes compatibility.", errors);
-            RequireContains(soul, "OpenClaw", "SOUL.md must mention OpenClaw compatibility.", errors);
-            RequireContains(soul, "Revit 2020", "SOUL.md must preserve the Revit 2020 boundary.", errors);
-            RequireContains(soul, "IExternalCommand", "SOUL.md must preserve the Revit command boundary.", errors);
+            RequireContains(soul, "身份", "SOUL.md must include the 身份 keyword.", errors);
+            RequireContains(soul, "记忆", "SOUL.md must include the 记忆 keyword.", errors);
+            RequireContains(soul, "identity", "SOUL.md must include the identity keyword.", errors);
+            RequireContains(soul, "communication", "SOUL.md must include the communication keyword.", errors);
+            RequireContains(soul, "style", "SOUL.md must include the style keyword.", errors);
+            RequireContains(soul, "规则", "SOUL.md must include the 规则 keyword.", errors);
+            RequireContains(soul, "rules", "SOUL.md must include the rules keyword.", errors);
+        }
+
+        var soulEnglish = ReadRequiredText(root, "SOUL.en-US.md", errors);
+        if (soulEnglish.Length > 0)
+        {
+            RequireContains(soulEnglish, "Identity", "SOUL.en-US.md must include the Identity keyword.", errors);
+            RequireContains(soulEnglish, "Memory", "SOUL.en-US.md must include the Memory keyword.", errors);
+            RequireContains(soulEnglish, "Communication", "SOUL.en-US.md must include the Communication keyword.", errors);
+            RequireContains(soulEnglish, "Style", "SOUL.en-US.md must include the Style keyword.", errors);
+            RequireContains(soulEnglish, "Rules", "SOUL.en-US.md must include the Rules keyword.", errors);
         }
 
         var identity = ReadRequiredText(root, "IDENTITY.md", errors);
         if (identity.Length > 0)
         {
-            RequireContains(identity, "GaoMengGu/PlugHub", "IDENTITY.md must identify the PlugHub repository.", errors);
-            RequireContains(identity, "GaoMengGu/PlugHub_Packages", "IDENTITY.md must identify the package repository pattern.", errors);
-            RequireContains(identity, "plughub-package-authoring", "IDENTITY.md must identify the Chinese skill path.", errors);
-            RequireContains(identity, "plughub-package-authoring-en", "IDENTITY.md must identify the English skill path.", errors);
+            RequireSingleSentence(identity, "IDENTITY.md", errors);
+            RequireContains(identity, "PlugHub", "IDENTITY.md must identify PlugHub.", errors);
+            RequireContains(identity, "Revit 2020", "IDENTITY.md must preserve the Revit 2020 boundary.", errors);
+        }
+
+        var identityEnglish = ReadRequiredText(root, "IDENTITY.en-US.md", errors);
+        if (identityEnglish.Length > 0)
+        {
+            RequireSingleSentence(identityEnglish, "IDENTITY.en-US.md", errors);
+            RequireContains(identityEnglish, "PlugHub", "IDENTITY.en-US.md must identify PlugHub.", errors);
+            RequireContains(identityEnglish, "Revit 2020", "IDENTITY.en-US.md must preserve the Revit 2020 boundary.", errors);
         }
 
         var agents = ReadRequiredText(root, "AGENTS.md", errors);
         if (agents.Length > 0)
         {
+            RequireContains(agents, "使命", "AGENTS.md must include the 使命 keyword.", errors);
+            RequireContains(agents, "mission", "AGENTS.md must include the mission keyword.", errors);
+            RequireContains(agents, "交付", "AGENTS.md must include the 交付 keyword.", errors);
+            RequireContains(agents, "workflow", "AGENTS.md must include the workflow keyword.", errors);
             RequireContains(agents, "IDENTITY.md", "AGENTS.md must load IDENTITY.md.", errors);
             RequireContains(agents, "SOUL.md", "AGENTS.md must load SOUL.md.", errors);
             RequireContains(agents, "skills.json", "AGENTS.md must use skills.json discovery.", errors);
             RequireContains(agents, "Hermes", "AGENTS.md must mention Hermes.", errors);
             RequireContains(agents, "OpenClaw", "AGENTS.md must mention OpenClaw.", errors);
+        }
+
+        var agentsEnglish = ReadRequiredText(root, "AGENTS.en-US.md", errors);
+        if (agentsEnglish.Length > 0)
+        {
+            RequireContains(agentsEnglish, "Mission", "AGENTS.en-US.md must include the Mission keyword.", errors);
+            RequireContains(agentsEnglish, "Workflow", "AGENTS.en-US.md must include the Workflow keyword.", errors);
+            RequireContains(agentsEnglish, "Delivery", "AGENTS.en-US.md must include the Delivery keyword.", errors);
+            RequireContains(agentsEnglish, "IDENTITY.en-US.md", "AGENTS.en-US.md must load IDENTITY.en-US.md.", errors);
+            RequireContains(agentsEnglish, "SOUL.en-US.md", "AGENTS.en-US.md must load SOUL.en-US.md.", errors);
+            RequireContains(agentsEnglish, "skills.json", "AGENTS.en-US.md must use skills.json discovery.", errors);
         }
     }
 
@@ -368,6 +415,22 @@ internal static class RepositoryValidator
         if (text.Contains(forbidden, StringComparison.OrdinalIgnoreCase))
         {
             errors.Add(error);
+        }
+    }
+
+    private static void RequireSingleSentence(string text, string relativePath, List<string> errors)
+    {
+        var normalized = text.Trim();
+        var nonEmptyLines = normalized.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
+        if (nonEmptyLines.Length != 1)
+        {
+            errors.Add($"{relativePath} must be a single non-empty line.");
+        }
+
+        var sentenceTerminators = normalized.Count(ch => ch is '.' or '。' or '!' or '！' or '?' or '？');
+        if (sentenceTerminators != 1)
+        {
+            errors.Add($"{relativePath} must contain exactly one sentence terminator.");
         }
     }
 
