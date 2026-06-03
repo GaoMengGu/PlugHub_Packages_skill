@@ -7,6 +7,14 @@ description: Use when creating, reviewing, or repairing Revit 2020 PlugHub exter
 
 Use this skill to produce a complete PlugHub-loadable package, not just a Revit command class. A valid package has a discoverable manifest, package-relative payload paths, a `net48` command assembly, and verification evidence.
 
+## Requirement Handling
+
+- Treat the user's request as a plugin feature specification, not as a documentation question. Unless the user explicitly asks only for a plan, actually create or modify package files.
+- First map the request to one user-clickable Revit feature: module id, feature id, Ribbon group, command type, input method, transaction boundary, failure messages, and validation approach.
+- If the feature changes the model, the command must use an explicit Revit API transaction. If it only reads state or asks for selection, still handle no active document, no active view, cancelled selection, and related failure paths.
+- Default to producing a complete PlugHub-discoverable package: `package.json` / `*.package.json`, `dist/*.dll` build path, icon path, project file, build script registration, and validation evidence.
+- If the current environment cannot run Revit 2020, report only static validation and build results, and explicitly mark the Revit runtime smoke test as pending. Do not equate static validation with runtime success.
+
 ## Workflow
 
 1. Locate the target package root and nearby examples.
