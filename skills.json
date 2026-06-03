@@ -1,0 +1,19 @@
+{
+  "repository": "GaoMengGu/PlugHub_Packages_skill",
+  "skills": [
+    {
+      "name": "plughub-package-authoring",
+      "language": "zh-CN",
+      "path": "plughub-package-authoring",
+      "default": true,
+      "description": "中文 PlugHub 外部插件包编写 skill"
+    },
+    {
+      "name": "plughub-package-authoring-en",
+      "language": "en-US",
+      "path": "plughub-package-authoring-en",
+      "default": false,
+      "description": "English PlugHub external plugin package authoring skill"
+    }
+  ]
+}

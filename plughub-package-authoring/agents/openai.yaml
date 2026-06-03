@@ -1,0 +1,4 @@
+interface:
+  display_name: "PlugHub 插件包编写"
+  short_description: "指导 agent 编写可被 PlugHub 加载的插件包"
+  default_prompt: "使用 $plughub-package-authoring 创建一个可被 PlugHub 发现和加载的 Revit 插件包。"

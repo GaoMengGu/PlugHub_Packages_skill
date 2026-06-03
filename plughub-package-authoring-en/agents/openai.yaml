@@ -1,0 +1,4 @@
+interface:
+  display_name: "PlugHub Package Authoring"
+  short_description: "Guide agents to build PlugHub-loadable plugin packages"
+  default_prompt: "Use $plughub-package-authoring-en to create a Revit plugin package that PlugHub can discover and load."
