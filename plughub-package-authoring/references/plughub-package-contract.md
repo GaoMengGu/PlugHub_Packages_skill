@@ -68,7 +68,7 @@
 - `feature.commandAssembly`：包内相对 DLL 路径，通常与 `module.assembly` 相同。
 - `feature.commandType`：实现 `Autodesk.Revit.UI.IExternalCommand` 的完整 CLR 类型名。
 - `feature.buttonSize`：使用 `large` 或 `small`。
-- `feature.iconPath`：包内相对图标路径。优先使用 `icons/` 下的 PNG 文件。
+- `feature.iconPath`：包内相对图标路径。优先指向生成或提供的 PNG 文件，命名为 `icons/<feature>.png`；该文件必须真实存在并随包载荷分发。
 
 对外部插件包仓库，除非正在编辑 PlugHub 框架配置，否则不要在包清单根节点放 `packageDirectories`、`moduleSources`、`repositories`、`conflictPolicy`。包仓库验证器会拒绝这些根配置键。
 

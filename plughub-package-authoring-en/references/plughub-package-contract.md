@@ -68,7 +68,7 @@ Use this as the default manifest skeleton:
 - `feature.commandAssembly`: package-relative DLL path, usually the same as `module.assembly`.
 - `feature.commandType`: full CLR type name of an `Autodesk.Revit.UI.IExternalCommand`.
 - `feature.buttonSize`: use `large` or `small`.
-- `feature.iconPath`: package-relative icon path. Prefer PNG files in `icons/`.
+- `feature.iconPath`: package-relative icon path. Prefer a generated or supplied PNG file named `icons/<feature>.png`; the file must exist and ship as package payload.
 
 For external package repositories, avoid root `packageDirectories`, `moduleSources`, `repositories`, and `conflictPolicy` unless you are editing PlugHub framework configuration. The package repository validator rejects these root config keys for package manifests.
 

@@ -146,7 +146,28 @@ namespace PlugHub.ExampleTool
    - 在 `package.json` 中添加 module 和 feature 记录。
    - 如果存在 solution 文件，将项目加入 solution。
    - 如果仓库使用集中构建脚本，将项目路径加入 `build.ps1`。
-   - 添加 `icons/<feature>.png`。
+   - 生成 feature 图标：从功能名称和描述中提取核心动词/名词，剔除写实细节，把概念转为方块、阵列、粗箭头或重叠剪影，再按 PlugHub 风格化生成 PNG。
+   - 使用这个提示词，把 `[Icon Concept]` 替换为功能概念：
+
+```text
+Role: Expert UI/UX Icon Designer
+Task: Generate a professional app icon matching a specific strict minimalistic design system.
+
+[Icon Concept]
+Create a flat, solid glyph icon that abstractly represents: [Icon Concept].
+The concept should be highly simplified into basic geometric shapes like blocks, arrows, matrices, or clean overlapping silhouettes. Do NOT draw realistic objects, interface screenshots, text, or fine lines.
+
+[Visual Style Constraints - STRICT]
+1. Style: Ultra-minimalist, 100% flat design, solid glyph icon. NO gradients, NO 3D shading, NO fine details, NO outline strokes.
+2. Color: Strictly monochrome. Solid dark charcoal (#1A1A1A) on a pure white background.
+3. Shape Language: Heavy visual weight. If lines or arrows are used, they must be very thick and bold. All sharp corners and edges must have a subtle, micro-rounded finish.
+4. Scale & Contrast: Use positive/negative space contrast so the icon is recognizable at 16x16.
+
+Output: Only the black and white solid icon PNG asset, perfectly centered, without any text or frame.
+```
+
+   - 保存生成的 PNG 到 `icons/<feature>.png`。
+   - 设置 `feature.iconPath` 为 `icons/<feature>.png`。
    - 构建输出到 `dist/<AssemblyName>.dll`。
 
 6. 验证。
@@ -163,6 +184,6 @@ namespace PlugHub.ExampleTool
 - 每个命令功能都声明 `commandAssembly` 和 `commandType`。
 - 每个相对 `assembly`、`commandAssembly`、`iconPath` 指向的文件都存在。
 - `dist/*.dll` 包含命令类型，并作为分发包的一部分保留。
-- `icons/*.png` 存在且为包内相对路径。
+- `icons/*.png` 是生成或用户提供的真实 PNG，存在且为包内相对路径。
 - 不要把 `bin/`、`obj/`、PDB、Revit API DLL 视为插件包 release 载荷。
 - 最终 release 或 ZIP 只包含用户安装需要的载荷，例如 `package.json`、`dist/*.dll`、`icons/*.png`。
