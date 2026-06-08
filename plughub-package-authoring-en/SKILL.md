@@ -15,6 +15,13 @@ Use this skill to produce a complete PlugHub-loadable package, not just a Revit 
 - Default to producing a complete PlugHub-discoverable package: `package.json` / `*.package.json`, `dist/*.dll` build path, icon path, project file, build script registration, and validation evidence.
 - If the current environment cannot run Revit 2020, report only static validation and build results, and explicitly mark the Revit runtime smoke test as pending. Do not equate static validation with runtime success.
 
+## Icon Generation
+
+- When authoring or repairing a plugin feature, generate an icon PNG for every user-clickable feature, save it to `icons/<feature>.png`, and update `feature.iconPath` to that package-relative path.
+- Generate the icon from the feature `displayName`, `description`, and core action, then apply the PlugHub icon design language: minimal geometric abstraction, 100% flat, solid dark charcoal `#1A1A1A`, pure white background, solid glyph geometry, micro-rounded corners, negative space, and recognizable at 16x16.
+- The icon generation prompt must include the core phrase `Create a flat, solid glyph icon` and ask for a black-and-white solid glyph PNG with no text, no frame, no gradients, no shadows, no outline strokes, and no 3D perspective; use the template in `references/authoring-playbook.md`.
+- Only skip icon generation when the user explicitly supplies an icon, explicitly asks not to generate one, or the current agent environment has no usable image generation capability. If skipped, mark the icon asset as pending in the delivery result and do not fake an `iconPath` to a missing file.
+
 ## Workflow
 
 1. Locate the target package root and nearby examples.
@@ -38,7 +45,7 @@ Use this skill to produce a complete PlugHub-loadable package, not just a Revit 
    - Add the project to the solution and `build.ps1` if the repo uses them.
    - Add or update the root manifest module and feature records.
    - Ensure `dist/*.dll` is produced by the build and retained for package distribution.
-   - Ensure icons are real package files, not `builtin:` references or absolute paths.
+   - Generate an icon PNG for each feature, save it to `icons/<feature>.png`, update `feature.iconPath`, and ensure icons are real package files, not `builtin:` references or absolute paths.
 
 5. Validate before completion.
    - Run `dotnet run --project <skill-dir>/tools/PlugHub.PackageValidator/PlugHub.PackageValidator.csproj -- <package-root>` for manifest and payload checks.

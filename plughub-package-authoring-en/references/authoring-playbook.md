@@ -146,7 +146,28 @@ namespace PlugHub.ExampleTool
    - Add a module entry and feature entry to `package.json`.
    - Add the project to the solution file if one exists.
    - Add the project path to `build.ps1` if the repo uses a central build script.
-   - Add `icons/<feature>.png`.
+   - Generate the feature icon: extract the core verb or noun from the feature name and description, remove realism, reduce the concept to blocks, matrices, heavy arrows, or overlapping silhouettes, then generate a PNG with PlugHub styling.
+   - Use this prompt, replacing `[Icon Concept]` with the feature concept:
+
+```text
+Role: Expert UI/UX Icon Designer
+Task: Generate a professional app icon matching a specific strict minimalistic design system.
+
+[Icon Concept]
+Create a flat, solid glyph icon that abstractly represents: [Icon Concept].
+The concept should be highly simplified into basic geometric shapes like blocks, arrows, matrices, or clean overlapping silhouettes. Do NOT draw realistic objects, interface screenshots, text, or fine lines.
+
+[Visual Style Constraints - STRICT]
+1. Style: Ultra-minimalist, 100% flat design, solid glyph icon. NO gradients, NO 3D shading, NO fine details, NO outline strokes.
+2. Color: Strictly monochrome. Solid dark charcoal (#1A1A1A) on a pure white background.
+3. Shape Language: Heavy visual weight. If lines or arrows are used, they must be very thick and bold. All sharp corners and edges must have a subtle, micro-rounded finish.
+4. Scale & Contrast: Use positive/negative space contrast so the icon is recognizable at 16x16.
+
+Output: Only the black and white solid icon PNG asset, perfectly centered, without any text or frame.
+```
+
+   - Save the generated PNG to `icons/<feature>.png`.
+   - Set `feature.iconPath` to `icons/<feature>.png`.
    - Build to `dist/<AssemblyName>.dll`.
 
 6. Validate.
@@ -163,6 +184,6 @@ namespace PlugHub.ExampleTool
 - Every command feature has `commandAssembly` and `commandType`.
 - Every relative `assembly`, `commandAssembly`, and `iconPath` exists.
 - `dist/*.dll` contains the command type and is part of the distributed package.
-- `icons/*.png` exists and is package-relative.
+- `icons/*.png` is a generated or user-supplied real PNG, exists, and is package-relative.
 - `bin/`, `obj/`, PDBs, and Revit API DLLs are not treated as package release payload.
 - The final release or ZIP includes only user-needed payload such as `package.json`, `dist/*.dll`, and `icons/*.png`.
