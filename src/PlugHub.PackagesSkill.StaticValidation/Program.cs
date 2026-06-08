@@ -243,11 +243,13 @@ internal static class RepositoryValidator
         if (skillDirectory.EndsWith("-en", StringComparison.Ordinal))
         {
             RequireContains(skillText, "generate an icon PNG", $"{skillDirectory}/SKILL.md must tell agents to generate icon PNG files.", errors);
+            RequireContains(skillText, "text-to-image", $"{skillDirectory}/SKILL.md must require text-to-image icon generation.", errors);
             RequireContains(skillText, "save it to `icons/<feature>.png`", $"{skillDirectory}/SKILL.md must tell agents where to save generated icons.", errors);
             RequireContains(skillText, "update `feature.iconPath`", $"{skillDirectory}/SKILL.md must tell agents to wire generated icons into the manifest.", errors);
             RequireContains(skillText, "icon generation prompt", $"{skillDirectory}/SKILL.md must include an icon generation prompt.", errors);
             RequireContains(skillText, "Create a flat, solid glyph icon", $"{skillDirectory}/SKILL.md must include the concrete PlugHub icon prompt wording.", errors);
             RequireContains(skillText, "Only skip icon generation", $"{skillDirectory}/SKILL.md must limit when icon generation may be skipped.", errors);
+            RequireContains(skillText, "no usable text-to-image capability", $"{skillDirectory}/SKILL.md must only allow skipping when text-to-image capability is unavailable.", errors);
             RequireContains(skillText, "32x32 canvas", $"{skillDirectory}/SKILL.md must require a 32x32 icon canvas.", errors);
             RequireContains(skillText, "24x24 safe area", $"{skillDirectory}/SKILL.md must require a 24x24 icon safe area.", errors);
             RequireContains(skillText, "4px margin", $"{skillDirectory}/SKILL.md must require a 4px icon margin.", errors);
@@ -260,6 +262,7 @@ internal static class RepositoryValidator
             RequireContains(contract, "transparent-background PNG", $"{skillDirectory}/plughub-package-contract.md must document transparent-background PNG icons.", errors);
 
             RequireContains(playbook, "Generate the feature icon", $"{skillDirectory}/authoring-playbook.md must include a feature icon generation step.", errors);
+            RequireContains(playbook, "text-to-image", $"{skillDirectory}/authoring-playbook.md must require text-to-image icon generation.", errors);
             RequireContains(playbook, "Use this prompt", $"{skillDirectory}/authoring-playbook.md must provide the generation prompt.", errors);
             RequireContains(playbook, "Save the generated PNG", $"{skillDirectory}/authoring-playbook.md must tell authors to save the generated PNG.", errors);
             RequireContains(playbook, "Set `feature.iconPath`", $"{skillDirectory}/authoring-playbook.md must tell authors to update the manifest icon path.", errors);
@@ -272,11 +275,13 @@ internal static class RepositoryValidator
         }
 
         RequireContains(skillText, "生成图标 PNG", $"{skillDirectory}/SKILL.md must tell agents to generate icon PNG files.", errors);
+        RequireContains(skillText, "文生图", $"{skillDirectory}/SKILL.md must require text-to-image icon generation.", errors);
         RequireContains(skillText, "保存到 `icons/<feature>.png`", $"{skillDirectory}/SKILL.md must tell agents where to save generated icons.", errors);
         RequireContains(skillText, "更新 `feature.iconPath`", $"{skillDirectory}/SKILL.md must tell agents to wire generated icons into the manifest.", errors);
         RequireContains(skillText, "图标生成提示词", $"{skillDirectory}/SKILL.md must include an icon generation prompt.", errors);
         RequireContains(skillText, "Create a flat, solid glyph icon", $"{skillDirectory}/SKILL.md must include the concrete PlugHub icon prompt wording.", errors);
         RequireContains(skillText, "只有用户明确提供图标", $"{skillDirectory}/SKILL.md must limit when icon generation may be skipped.", errors);
+        RequireContains(skillText, "没有可用文生图能力", $"{skillDirectory}/SKILL.md must only allow skipping when text-to-image capability is unavailable.", errors);
         RequireContains(skillText, "32×32 画布", $"{skillDirectory}/SKILL.md must require a 32x32 icon canvas.", errors);
         RequireContains(skillText, "24×24 安全区", $"{skillDirectory}/SKILL.md must require a 24x24 icon safe area.", errors);
         RequireContains(skillText, "4px 留白", $"{skillDirectory}/SKILL.md must require a 4px icon margin.", errors);
@@ -289,6 +294,7 @@ internal static class RepositoryValidator
         RequireContains(contract, "透明底 PNG", $"{skillDirectory}/plughub-package-contract.md must document transparent-background PNG icons.", errors);
 
         RequireContains(playbook, "生成 feature 图标", $"{skillDirectory}/authoring-playbook.md must include a feature icon generation step.", errors);
+        RequireContains(playbook, "文生图", $"{skillDirectory}/authoring-playbook.md must require text-to-image icon generation.", errors);
         RequireContains(playbook, "使用这个提示词", $"{skillDirectory}/authoring-playbook.md must provide the generation prompt.", errors);
         RequireContains(playbook, "保存生成的 PNG", $"{skillDirectory}/authoring-playbook.md must tell authors to save the generated PNG.", errors);
         RequireContains(playbook, "设置 `feature.iconPath`", $"{skillDirectory}/authoring-playbook.md must tell authors to update the manifest icon path.", errors);

@@ -146,7 +146,7 @@ namespace PlugHub.ExampleTool
    - 在 `package.json` 中添加 module 和 feature 记录。
    - 如果存在 solution 文件，将项目加入 solution。
    - 如果仓库使用集中构建脚本，将项目路径加入 `build.ps1`。
-   - 生成 feature 图标：从功能名称和描述中提取核心动词/名词，剔除写实细节，把概念转为方块、阵列、粗箭头或重叠剪影，再按 PlugHub 风格化生成 PNG。
+   - 使用文生图生成 feature 图标：从功能名称和描述中提取核心动词/名词，剔除写实细节，把概念转为方块、阵列、粗箭头或重叠剪影，再按 PlugHub 风格化生成 PNG。
    - 使用这个提示词，把 `[Icon Concept]` 替换为功能概念：
 
 ```text
