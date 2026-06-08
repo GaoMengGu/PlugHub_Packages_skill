@@ -19,7 +19,8 @@ Use this skill to produce a complete PlugHub-loadable package, not just a Revit 
 
 - When authoring or repairing a plugin feature, generate an icon PNG for every user-clickable feature, save it to `icons/<feature>.png`, and update `feature.iconPath` to that package-relative path.
 - Generate the icon from the feature `displayName`, `description`, and core action, then apply the PlugHub icon design language: minimal geometric abstraction, 100% flat, solid dark charcoal `#1A1A1A`, pure white background, solid glyph geometry, micro-rounded corners, negative space, and recognizable at 16x16.
-- The icon generation prompt must include the core phrase `Create a flat, solid glyph icon` and ask for a black-and-white solid glyph PNG with no text, no frame, no gradients, no shadows, no outline strokes, and no 3D perspective; use the template in `references/authoring-playbook.md`.
+- The icon generation prompt must include the core phrase `Create a flat, solid glyph icon` and ask for a strict 32x32 canvas, the main glyph inside a 24x24 safe area, a 4px margin on every side, a transparent-background PNG, no text, no extra background fill, no frame, no gradients, no shadows, no outline strokes, and no 3D perspective; use the template in `references/authoring-playbook.md`.
+- Revit scales the 32x32 source icon automatically on high-DPI displays. Do not generate @2x, @3x, or other multi-scale variants.
 - Only skip icon generation when the user explicitly supplies an icon, explicitly asks not to generate one, or the current agent environment has no usable image generation capability. If skipped, mark the icon asset as pending in the delivery result and do not fake an `iconPath` to a missing file.
 
 ## Workflow
