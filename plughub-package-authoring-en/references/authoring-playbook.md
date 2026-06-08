@@ -146,7 +146,7 @@ namespace PlugHub.ExampleTool
    - Add a module entry and feature entry to `package.json`.
    - Add the project to the solution file if one exists.
    - Add the project path to `build.ps1` if the repo uses a central build script.
-   - Generate the feature icon: extract the core verb or noun from the feature name and description, remove realism, reduce the concept to blocks, matrices, heavy arrows, or overlapping silhouettes, then generate a PNG with PlugHub styling.
+   - Generate the feature icon with text-to-image: extract the core verb or noun from the feature name and description, remove realism, reduce the concept to blocks, matrices, heavy arrows, or overlapping silhouettes, then generate a PNG with PlugHub styling.
    - Use this prompt, replacing `[Icon Concept]` with the feature concept:
 
 ```text
