@@ -159,11 +159,13 @@ The concept should be highly simplified into basic geometric shapes like blocks,
 
 [Visual Style Constraints - STRICT]
 1. Style: Ultra-minimalist, 100% flat design, solid glyph icon. NO gradients, NO 3D shading, NO fine details, NO outline strokes.
-2. Color: Strictly monochrome. Solid dark charcoal (#1A1A1A) on a pure white background.
+2. Color: Strictly monochrome. Solid dark charcoal (#1A1A1A). Use a transparent background, not a filled white square.
 3. Shape Language: Heavy visual weight. If lines or arrows are used, they must be very thick and bold. All sharp corners and edges must have a subtle, micro-rounded finish.
 4. Scale & Contrast: Use positive/negative space contrast so the icon is recognizable at 16x16.
+5. Revit Asset Size: Output exactly one 32×32 画布. Keep the main glyph inside a 24×24 安全区 with 4px 留白 on all sides so Revit does not crop it.
+6. Output Format: 透明背景 PNG only. Revit scales 32×32 source icons automatically on high-DPI displays, so 不用额外做多倍图, @2x, @3x, or other scaled variants.
 
-Output: Only the black and white solid icon PNG asset, perfectly centered, without any text or frame.
+Output: Only the black and transparent solid icon PNG asset, perfectly centered, without any text, frame, outline, or extra background fill.
 ```
 
    - 保存生成的 PNG 到 `icons/<feature>.png`。

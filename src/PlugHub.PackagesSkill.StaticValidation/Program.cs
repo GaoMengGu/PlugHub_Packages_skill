@@ -248,14 +248,26 @@ internal static class RepositoryValidator
             RequireContains(skillText, "icon generation prompt", $"{skillDirectory}/SKILL.md must include an icon generation prompt.", errors);
             RequireContains(skillText, "Create a flat, solid glyph icon", $"{skillDirectory}/SKILL.md must include the concrete PlugHub icon prompt wording.", errors);
             RequireContains(skillText, "Only skip icon generation", $"{skillDirectory}/SKILL.md must limit when icon generation may be skipped.", errors);
+            RequireContains(skillText, "32x32 canvas", $"{skillDirectory}/SKILL.md must require a 32x32 icon canvas.", errors);
+            RequireContains(skillText, "24x24 safe area", $"{skillDirectory}/SKILL.md must require a 24x24 icon safe area.", errors);
+            RequireContains(skillText, "4px margin", $"{skillDirectory}/SKILL.md must require a 4px icon margin.", errors);
+            RequireContains(skillText, "transparent-background PNG", $"{skillDirectory}/SKILL.md must require transparent-background PNG icons.", errors);
+            RequireContains(skillText, "Do not generate @2x", $"{skillDirectory}/SKILL.md must say not to generate multi-scale icon assets.", errors);
 
             RequireContains(contract, "generated or supplied PNG file", $"{skillDirectory}/plughub-package-contract.md must describe iconPath as a generated or supplied PNG asset.", errors);
             RequireContains(contract, "icons/<feature>.png", $"{skillDirectory}/plughub-package-contract.md must preserve the icon asset convention.", errors);
+            RequireContains(contract, "32x32", $"{skillDirectory}/plughub-package-contract.md must document the 32x32 icon size.", errors);
+            RequireContains(contract, "transparent-background PNG", $"{skillDirectory}/plughub-package-contract.md must document transparent-background PNG icons.", errors);
 
             RequireContains(playbook, "Generate the feature icon", $"{skillDirectory}/authoring-playbook.md must include a feature icon generation step.", errors);
             RequireContains(playbook, "Use this prompt", $"{skillDirectory}/authoring-playbook.md must provide the generation prompt.", errors);
             RequireContains(playbook, "Save the generated PNG", $"{skillDirectory}/authoring-playbook.md must tell authors to save the generated PNG.", errors);
             RequireContains(playbook, "Set `feature.iconPath`", $"{skillDirectory}/authoring-playbook.md must tell authors to update the manifest icon path.", errors);
+            RequireContains(playbook, "32x32 canvas", $"{skillDirectory}/authoring-playbook.md must include the 32x32 icon canvas in the prompt.", errors);
+            RequireContains(playbook, "24x24 safe area", $"{skillDirectory}/authoring-playbook.md must include the 24x24 icon safe area in the prompt.", errors);
+            RequireContains(playbook, "4px margin", $"{skillDirectory}/authoring-playbook.md must include the 4px icon margin in the prompt.", errors);
+            RequireContains(playbook, "transparent background", $"{skillDirectory}/authoring-playbook.md must require transparent icon backgrounds.", errors);
+            RequireContains(playbook, "Do not generate @2x", $"{skillDirectory}/authoring-playbook.md must say not to generate multi-scale icon assets.", errors);
             return;
         }
 
@@ -265,14 +277,26 @@ internal static class RepositoryValidator
         RequireContains(skillText, "图标生成提示词", $"{skillDirectory}/SKILL.md must include an icon generation prompt.", errors);
         RequireContains(skillText, "Create a flat, solid glyph icon", $"{skillDirectory}/SKILL.md must include the concrete PlugHub icon prompt wording.", errors);
         RequireContains(skillText, "只有用户明确提供图标", $"{skillDirectory}/SKILL.md must limit when icon generation may be skipped.", errors);
+        RequireContains(skillText, "32×32 画布", $"{skillDirectory}/SKILL.md must require a 32x32 icon canvas.", errors);
+        RequireContains(skillText, "24×24 安全区", $"{skillDirectory}/SKILL.md must require a 24x24 icon safe area.", errors);
+        RequireContains(skillText, "4px 留白", $"{skillDirectory}/SKILL.md must require a 4px icon margin.", errors);
+        RequireContains(skillText, "透明底 PNG", $"{skillDirectory}/SKILL.md must require transparent-background PNG icons.", errors);
+        RequireContains(skillText, "不用额外做多倍图", $"{skillDirectory}/SKILL.md must say not to generate multi-scale icon assets.", errors);
 
         RequireContains(contract, "生成或提供的 PNG 文件", $"{skillDirectory}/plughub-package-contract.md must describe iconPath as a generated or supplied PNG asset.", errors);
         RequireContains(contract, "icons/<feature>.png", $"{skillDirectory}/plughub-package-contract.md must preserve the icon asset convention.", errors);
+        RequireContains(contract, "32×32", $"{skillDirectory}/plughub-package-contract.md must document the 32x32 icon size.", errors);
+        RequireContains(contract, "透明底 PNG", $"{skillDirectory}/plughub-package-contract.md must document transparent-background PNG icons.", errors);
 
         RequireContains(playbook, "生成 feature 图标", $"{skillDirectory}/authoring-playbook.md must include a feature icon generation step.", errors);
         RequireContains(playbook, "使用这个提示词", $"{skillDirectory}/authoring-playbook.md must provide the generation prompt.", errors);
         RequireContains(playbook, "保存生成的 PNG", $"{skillDirectory}/authoring-playbook.md must tell authors to save the generated PNG.", errors);
         RequireContains(playbook, "设置 `feature.iconPath`", $"{skillDirectory}/authoring-playbook.md must tell authors to update the manifest icon path.", errors);
+        RequireContains(playbook, "32×32 画布", $"{skillDirectory}/authoring-playbook.md must include the 32x32 icon canvas in the prompt.", errors);
+        RequireContains(playbook, "24×24 安全区", $"{skillDirectory}/authoring-playbook.md must include the 24x24 icon safe area in the prompt.", errors);
+        RequireContains(playbook, "4px 留白", $"{skillDirectory}/authoring-playbook.md must include the 4px icon margin in the prompt.", errors);
+        RequireContains(playbook, "透明背景", $"{skillDirectory}/authoring-playbook.md must require transparent icon backgrounds.", errors);
+        RequireContains(playbook, "不用额外做多倍图", $"{skillDirectory}/authoring-playbook.md must say not to generate multi-scale icon assets.", errors);
     }
 
     private static void ValidateSkillFrontmatter(string root, string skillDirectory, List<string> errors)
